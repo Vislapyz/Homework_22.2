@@ -1,0 +1,78 @@
+[
+  {
+    "model": "catalog.category",
+    "pk": 1,
+    "fields": {
+      "name": "Фрукты",
+      "description": "Категория Фрукты"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 2,
+    "fields": {
+      "name": "Овощи",
+      "description": "Категория Овощи"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 3,
+    "fields": {
+      "name": "Молочные продукты",
+      "description": "Категория Молочные продукты"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 9,
+    "fields": {
+      "name": "Яблоки 1 кг",
+      "description": "Яблоки 1 кг, кисло-сладкие",
+      "preview": "dogs_foto/elma.jpeg",
+      "category": 1,
+      "price": 45,
+      "date_of_creation": "2024-02-19",
+      "last_modified_date": "2024-02-19"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 10,
+    "fields": {
+      "name": "Картофель 1 кг",
+      "description": "Картофель 1 кг, высокий процент содержания крахмала",
+      "preview": "dogs_foto/potateis_5r1Zvs6.jpg",
+      "category": 2,
+      "price": 35,
+      "date_of_creation": "2024-02-19",
+      "last_modified_date": "2024-02-19"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 11,
+    "fields": {
+      "name": "Молоко 1л",
+      "description": "Молоко 1л, жирность 3,2%",
+      "preview": "dogs_foto/milk_vnzMxzp.png",
+      "category": 3,
+      "price": 45,
+      "date_of_creation": "2024-02-19",
+      "last_modified_date": "2024-02-19"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 12,
+    "fields": {
+      "name": "Кефир 1 л",
+      "description": "Кефир 1 л, жирность 1%",
+      "preview": "dogs_foto/kefir_xdTxmLd.jpg",
+      "category": 3,
+      "price": 55,
+      "date_of_creation": "2024-02-19",
+      "last_modified_date": "2024-02-19"
+    }
+  }
+]
