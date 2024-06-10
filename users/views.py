@@ -4,10 +4,10 @@ from django.contrib.auth.views import PasswordChangeView
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView
 
 from config.settings import EMAIL_HOST_USER
-from users.forms import UserRegisterForm, UserPasswordChangeForm, UserForm
+from users.forms import UserRegisterForm
 from users.models import User
 
 

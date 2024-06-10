@@ -24,15 +24,11 @@
                             Зарегистрировать
                             {% endif %}
                         </button>
-                        {% if object %}
-                        <p ><a href="{% url 'users:password-change' %}" class="btn mt-4 btn-danger">Сменить пароль</a></p>
-                        {% endif %}
+
                     </div>
-                    <div class="card-footer">
-                    </div>
+
                 </div>
             </div>
         </form>
     </div>
-</div>
 {% endblock %}
