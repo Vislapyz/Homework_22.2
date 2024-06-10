@@ -4,12 +4,30 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Skystore</title>
+    <title>Здоровье в ложке</title>
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
 </head>
 <body>
 <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
-    <h5 class="my-0 mr-md-auto font-weight-normal">Skystore</h5>
+    <div class="col-sm-4 offset-md-1 py-4">
+        <h4>Навигация</h4>
+        <ul class="list-unstyled">
+            <li><a href="{% url 'catalog:products_list' %}" class="text-black">На главную</a></li>
+            {% if user.is_authenticated %}
+            <li>
+               <form action="{% url 'users:logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-light">Выйти</button>
+                </form>
+            </li>
+            <li><a href="{% url 'users:profile' %}" class="text-black">Профиль</a></li>
+            {% else %}
+                <li><a href="{% url 'users:login' %}" class="text-black">Вход</a></li>
+                <li><a href="{% url 'users:register' %}" class="text-black">Регистрация</a></li>
+            {% endif %}
+            <li><a href="/admin/" class="text-black">Админка</a></li>
+        </ul>
+    </div>
     <nav class="ms-5">
         <a class="p-2 btn btn-outline-primary" href="/">Каталог</a>
         <a class="p-2 btn btn-outline-primary" href="/contacts/">Контакты</a>

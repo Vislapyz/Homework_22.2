@@ -20,11 +20,9 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include(('catalog.urls', 'catalog'), namespace='catalog')),
-    path('blog/', include(('blog.urls', 'blog'), namespace='blog'))
-
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
+                  path("admin/", admin.site.urls),
+                  path("", include(("catalog.urls", "catalog"), namespace="catalog")),
+                  path("blog/", include(("blog.urls", "blog"), namespace="blog")),
+                  path("users/", include(("users.urls", "users"), namespace="users")),
+              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
