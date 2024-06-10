@@ -1,12 +1,13 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import inlineformset_factory
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse, reverse_lazy
 from django.views.generic import (
-    TemplateView,
-    ListView,
-    DetailView,
     CreateView,
-    UpdateView,
     DeleteView,
+    DetailView,
+    ListView,
+    TemplateView,
+    UpdateView,
 )
 
 from catalog.forms import ProductForm, VersionForm
@@ -25,44 +26,37 @@ class ContactsTemplateView(TemplateView):
 
 
 class ProductListView(ListView):
-    """Класс для вывода страницы со всеми продуктами"""
-
     model = Product
 
     def get_context_data(self, *args, **kwargs):
-        """Метод для получения версий Продукта и вывода только активной версии"""
         context = super().get_context_data(*args, **kwargs)
         products = self.get_queryset()
         for product in products:
             product.version = product.versions.filter(is_current=True).first()
 
-        # Данная строчка нужна, чтобы в contex добавились новые данные о Продуктах
         context["object_list"] = products
 
         return context
 
 
 class ProductDetailView(DetailView):
-    """Класс для вывода страницы с одним продуктом по pk"""
-
     model = Product
 
     def get_object(self, queryset=None):
-        """Метод для настройки работы счетчика просмотра продукта"""
         self.object = super().get_object(queryset)
         self.object.view_counter += 1
         self.object.save()
         return self.object
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy("catalog:products_list")
 
     def get_context_data(self, **kwargs):
-        """Метод для создания Формсета и настройки его работы"""
         context_data = super().get_context_data(**kwargs)
+
         VersionFormset = inlineformset_factory(
             Product, Version, form=VersionForm, extra=1
         )
@@ -76,13 +70,19 @@ class ProductCreateView(CreateView):
         return context_data
 
     def form_valid(self, form):
-        """Метод для проверки валидации формы и формсета"""
+
         context_data = self.get_context_data()
         formset = context_data["formset"]
+
         if form.is_valid() and formset.is_valid():
             self.object = form.save()
             formset.instance = self.object
+
             formset.save()
+
+            self.object = form.save()
+            self.object.author = self.request.user
+            self.object.save()
             return super().form_valid(form)
 
         else:
@@ -91,17 +91,18 @@ class ProductCreateView(CreateView):
             )
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
+
     form_class = ProductForm
 
     def get_success_url(self):
-        """Метод для определения пути, куда будет совершен переход после редактирования продкута"""
         return reverse("catalog:product_detail", args=[self.get_object().pk])
 
     def get_context_data(self, **kwargs):
-        """Метод для создания Формсета и настройки его работы"""
+
         context_data = super().get_context_data(**kwargs)
+
         VersionFormset = inlineformset_factory(
             Product, Version, form=VersionForm, extra=1
         )
@@ -117,12 +118,14 @@ class ProductUpdateView(UpdateView):
         return context_data
 
     def form_valid(self, form):
-        """Метод для проверки валидации формы и формсета"""
+
         context_data = self.get_context_data()
         formset = context_data["formset"]
+
         if form.is_valid() and formset.is_valid():
             self.object = form.save()
             formset.instance = self.object
+            #
             formset.save()
             return super().form_valid(form)
 
@@ -132,6 +135,6 @@ class ProductUpdateView(UpdateView):
             )
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
     success_url = reverse_lazy("catalog:products_list")
