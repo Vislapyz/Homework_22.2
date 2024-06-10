@@ -36,7 +36,7 @@ class User(AbstractUser):
     )
     token = models.CharField(
         max_length=50,
-        verbose_name="Токен",
+        verbose_name="Token",
         blank=True,
         null=True,
     )

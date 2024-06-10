@@ -7,20 +7,30 @@
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title">
-                          Вход в Личный кабинет
+                          {% if object %}
+                            Профиль Пользователя
+                             {% else %}
+                            Форма регистрации на сайте
+                            {% endif %}
                         </h4>
                     </div>
                     <div class="card-body">
                         {% csrf_token %}
                         {{ form.as_p }}
                         <button type="submit" class="btn btn-success">
-                         Зарегистрироваться
+                            {% if object %}
+                            Сохранить
+                            {% else %}
+                            Зарегистрировать
+                            {% endif %}
                         </button>
 
                     </div>
-
+                    <div class="card-footer">
+                    </div>
                 </div>
             </div>
         </form>
     </div>
+</div>
 {% endblock %}
