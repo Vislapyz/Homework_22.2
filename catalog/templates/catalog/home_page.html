@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Skystore</title>
-<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
 </head>
 <body>
 <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
@@ -20,10 +20,10 @@
                     <button type="submit" class="btn btn-light">Выйти</button>
                 </form>
             </li>
-
+            <li><a href="{% url 'users:profile' %}" class="text-black">Профиль</a></li>
             {% else %}
                 <li><a href="{% url 'users:login' %}" class="text-black">Вход</a></li>
-
+                <li><a href="{% url 'users:registration' %}" class="text-black">Регистрация</a></li>
             {% endif %}
             <li><a href="/admin/" class="text-black">Админка</a></li>
         </ul>
